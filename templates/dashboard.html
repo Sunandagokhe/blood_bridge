@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dashboard - BloodBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+  <nav class="bg-red-600 text-white p-4 flex justify-between items-center shadow-lg">
+    <h2 class="font-bold text-xl">🩸 BloodBridge Dashboard</h2>
+    <a href="{{ url_for('logout') }}" class="hover:underline transition">Logout</a>
+  </nav>
+
+  <div class="p-6">
+    <h3 class="text-xl font-bold mb-4">Welcome, {{ user.name }}!</h3>
+
+    <!-- Tabs -->
+    <div class="mb-6">
+      <div class="flex space-x-4">
+        <button onclick="showTab('overview')" class="bg-red-600 text-white px-4 py-2 rounded">Overview</button>
+        <button onclick="showTab('search')" class="bg-gray-600 text-white px-4 py-2 rounded">Search Donors</button>
+        <a href="{{ url_for('donate_blood') }}" class="bg-gray-600 text-white px-4 py-2 rounded inline-block">
+          Donate Blood
+        </a>
+        <a href="{{ url_for('inventory') }}" class="bg-gray-600 text-white px-4 py-2 rounded inline-block">
+          Inventory
+        </a>
+        <button onclick="showTab('appointments')" class="bg-gray-600 text-white px-4 py-2 rounded">Appointments</button>
+      </div>
+    </div>
+
+    <!-- Overview Tab -->
+    <div id="overview" class="tab-content">
+      <!-- Request Blood Button -->
+      <div class="mb-6">
+        <a href="{{ url_for('request_blood') }}"
+          class="inline-block bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+          🩸 Request Blood
+        </a>
+      </div>
+      <div class="mb-6">
+        <h4 class="text-lg font-bold">Notifications</h4>
+        <ul class="space-y-2">
+          {% for n in notifications %}
+          {% if n.type == "inventory_request" %}
+          <li class="bg-blue-100 p-3 rounded">
+            🧪 Inventory Request:
+            <b>{{ n.blood_group }}</b> –
+            {{ n.units }} units at {{ n.location }} <br>
+            <span class="font-semibold">
+              Status: {{ n.status }}
+            </span>
+          </li>
+          {% else %}
+          <li class="bg-yellow-100 p-3 rounded">
+            {{ n.message }}
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Blood Requests -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Blood Requests</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {% for item in enriched_requests %}
+          <div class="bg-white p-4 rounded shadow">
+            <h5 class="text-red-600 font-bold">{{ item.request.blood_group }} Request</h5>
+            <p>Units: {{ item.request.units }}</p>
+            <p>Priority: {{ item.request.priority }}</p>
+            <p>Location: {{ item.request.location }}</p>
+            <p>Status: {{ item.request.status }}</p>
+            {% if item.request.status == 'Pending' %}
+            <a href="{{ url_for('donate_blood') }}?request_id={{ item.request.id }}"
+              class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Donate</a>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Donors Tab -->
+    <div id="search" class="tab-content hidden">
+      <h4 class="text-lg font-bold mb-2">Search for Available Donors by Blood Type and Location</h4>
+      <form id="searchForm" class="bg-white p-4 rounded shadow">
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Blood Type</label>
+          <select id="bloodType" class="w-full p-2 border rounded" required>
+            <option value="">Select Blood Group</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Location (optional)</label>
+          <input type="text" id="location" placeholder="e.g., City Hospital" class="w-full p-2 border rounded">
+        </div>
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Search</button>
+      </form>
+
+      <div id="searchResults" class="mt-4"></div>
+    </div>
+
+    <!-- Appointments Tab -->
+    <div id="appointments" class="tab-content hidden">
+      <h4 class="text-lg font-bold mb-4">Appointments</h4>
+      <form method="POST" action="{{ url_for('add_appointment') }}" class="bg-white p-4 rounded shadow mb-4">
+        <label class="block text-gray-700">Date</label>
+        <input type="date" name="date" class="w-full p-2 border rounded mb-4" required>
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Add Appointment</button>
+      </form>
+
+      <div class="space-y-2">
+        {% for appt in appointments %}
+        <div class="bg-white p-3 rounded shadow">
+          <p><strong>Date:</strong> {{ appt.date }}</p>
+          <p><strong>Location:</strong> {{ appt.location }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      // Show selected tab
+      document.getElementById(tabId).classList.remove('hidden');
+      // Update button styles (only for buttons, not links)
+      document.querySelectorAll('button').forEach(btn => {
+        if (btn.onclick && btn.onclick.toString().includes('showTab')) {
+          btn.classList.remove('bg-red-600');
+          btn.classList.add('bg-gray-600');
+        }
+      });
+      if (event.target.tagName === 'BUTTON') {
+        event.target.classList.remove('bg-gray-600');
+        event.target.classList.add('bg-red-600');
+      }
+    }
+
+    document.getElementById('searchForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const bloodType = document.getElementById('bloodType').value;
+      const location = document.getElementById('location').value;
+      
+      if (!bloodType) {
+        alert('Please select a blood type.');
+        return;
+      }
+
+      fetch('/api/search_donors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ blood_type: bloodType, location: location })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const resultsDiv = document.getElementById('searchResults');
+          resultsDiv.innerHTML = '';  // Clear previous results
+
+          let hasResults = false;
+
+          // Display Inventory
+          if (data.inventory && data.inventory.length > 0) {
+            resultsDiv.innerHTML += '<h5 class="text-md font-bold mb-2">🧪 Available Inventory</h5>';
+            data.inventory.forEach(item => {
+              resultsDiv.innerHTML += `<div class="bg-green-50 p-3 rounded shadow mb-2">
+                <p><strong>Blood Group:</strong> ${item.blood_group}</p>
+                <p><strong>Units:</strong> ${item.units}</p>
+                <p><strong>Location:</strong> ${item.location}</p>
+              </div>`;
+            });
+            hasResults = true;
+          }
+
+          // Display Donors
+          if (data.donors && data.donors.length > 0) {
+            resultsDiv.innerHTML += '<h5 class="text-md font-bold mb-2">Matching Blood Group Users</h5>';
+            data.donors.forEach(donor => {
+              resultsDiv.innerHTML += `<div class="bg-white p-3 rounded shadow mb-2">
+                <p><strong>Name:</strong> ${donor.name}</p>
+                <p><strong>Phone:</strong> ${donor.phone}</p>
+                <p><strong>Blood Type:</strong> ${donor.blood_group}</p>
+                <p><strong>Address:</strong> ${donor.address}</p>
+              </div>`;
+            });
+            hasResults = true;
+          }
+
+          // No results message
+          if (!hasResults) {
+            resultsDiv.innerHTML = '<p class="text-gray-500">No matching donors or inventory found.</p>';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('searchResults').innerHTML = '<p class="text-red-500">Error fetching data. Please try again.</p>';
+        });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Admin Dashboard - BloodBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+  <nav class="bg-red-600 text-white p-4 flex justify-between items-center shadow-lg">
+    <h2 class="font-bold text-xl">🩸 BloodBridge Admin Dashboard</h2>
+    <a href="{{ url_for('admin_logout') }}" class="hover:underline transition">Logout</a>
+  </nav>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-red-700 text-white min-h-screen p-4">
+      <h3 class="text-lg font-bold mb-4">Admin Navigation</h3>
+      <ul class="space-y-2">
+        <li><a href="#users" class="block py-2 px-4 hover:bg-red-800 rounded transition"
+            onclick="showTab('users')">Manage Users</a></li>
+        <li><a href="#requests" class="block py-2 px-4 hover:bg-red-800 rounded transition"
+            onclick="showTab('requests')">Blood Requests (Receivers)</a></li>
+        <li><a href="#donations" class="block py-2 px-4 hover:bg-red-800 rounded transition"
+            onclick="showTab('donations')">Donation History</a></li>
+        <li><a href="#inventory" class="block py-2 px-4 hover:bg-red-800 rounded transition"
+            onclick="showTab('inventory')">Manage Inventory</a></li>
+        <li><a href="#notifications" class="block py-2 px-4 hover:bg-red-800 rounded transition"
+            onclick="showTab('notifications')">Notifications</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <!-- Manage Users Tab -->
+      <div id="users" class="tab-content">
+        <h3 class="text-2xl font-bold mb-4">Manage Users</h3>
+        <table class="w-full bg-white rounded shadow">
+          <thead class="bg-red-600 text-white">
+            <tr>
+              <th class="p-3">ID</th>
+              <th class="p-3">Name</th>
+              <th class="p-3">Email</th>
+              <th class="p-3">Blood Group</th>
+              <th class="p-3">Role</th>
+              <th class="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr class="border-b">
+              <td class="p-3">{{ user.id }}</td>
+              <td class="p-3">{{ user.name }}</td>
+              <td class="p-3">{{ user.email }}</td>
+              <td class="p-3">{{ user.blood_group }}</td>
+              <td class="p-3">{{ user.role }}</td>
+              <td class="p-3">
+                <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700" onclick="deleteUser({{ user['id'] }})">Delete</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Blood Requests Tab (Receiver Data) -->
+      <div id="requests" class="tab-content hidden">
+        <h3 class="text-2xl font-bold mb-4">Blood Requests (Receiver Data)</h3>
+        <table class="w-full bg-white rounded shadow">
+          <thead class="bg-red-600 text-white">
+            <tr>
+              <th class="p-3">ID</th>
+              <th class="p-3">Blood Group</th>
+              <th class="p-3">Units</th>
+              <th class="p-3">Priority</th>
+              <th class="p-3">Location</th>
+              <th class="p-3">Requested By</th>
+              <th class="p-3">Status</th>
+              <th class="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for req in requests %}
+            <tr class="border-b">
+              <td class="p-3">{{ req.id }}</td>
+              <td class="p-3">{{ req.blood_group }}</td>
+              <td class="p-3">{{ req.units }}</td>
+              <td class="p-3">{{ req.priority }}</td>
+              <td class="p-3">{{ req.location }}</td>
+              <td class="p-3">{{ req.requested_by }}</td>
+              <td class="p-3">{{ req.status }}</td>
+              <td class="p-3">
+                {% if req.status == 'Pending' %}
+                <a href="{{ url_for('approve_request', req_id=req.id) }}"
+                  class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700">Approve</a>
+                {% endif %}
+                <a href="{{ url_for('delete_request', req_id=req.id) }}"
+                  class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 ml-2">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Donation History Tab -->
+      <div id="donations" class="tab-content hidden">
+        <h3 class="text-2xl font-bold mb-4">Donation History</h3>
+        <table class="w-full bg-white rounded shadow">
+          <thead class="bg-red-600 text-white">
+            <tr>
+              <th class="p-3">User ID</th>
+              <th class="p-3">Blood Group</th>
+              <th class="p-3">Location</th>
+              <th class="p-3">Date</th>
+              <th class="p-3">Request ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for don in donations %}
+            <tr class="border-b">
+              <td class="p-3">{{ don.user_id }}</td>
+              <td class="p-3">{{ don.blood_group }}</td>
+              <td class="p-3">{{ don.location }}</td>
+              <td class="p-3">{{ don.date }}</td>
+              <td class="p-3">{{ don.request_id or 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+     <!-- Inventory Requests -->
+<div class="mt-8">
+  <h3 class="text-2xl font-bold mb-4">🧪 Inventory Requests</h3>
+
+  <table class="w-full bg-white rounded shadow">
+    <thead class="bg-red-600 text-white">
+      <tr>
+        <th class="p-3">Blood Group</th>
+        <th class="p-3">Units</th>
+        <th class="p-3">Location</th>
+        <th class="p-3">Requested By</th>
+        <th class="p-3">Status</th>
+        <th class="p-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in notifications if n.type == 'inventory_request' %}
+      <tr class="border-b">
+        <td class="p-3">{{ n.blood_group }}</td>
+        <td class="p-3">{{ n.units }}</td>
+        <td class="p-3">{{ n.location }}</td>
+        <td class="p-3">{{ n.requested_by }}</td>
+        <td class="p-3 font-semibold">{{ n.status }}</td>
+        <td class="p-3">
+          {% if n.status == 'Pending' %}
+            <a href="{{ url_for('approve_inventory', req_id=n.id) }}"
+               class="bg-green-600 text-white px-2 py-1 rounded">Approve</a>
+            <a href="{{ url_for('reject_inventory', req_id=n.id) }}"
+               class="bg-red-600 text-white px-2 py-1 rounded ml-2">Reject</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+      <!-- Notifications Tab -->
+      <div id="notifications" class="tab-content hidden">
+        <h3 class="text-2xl font-bold mb-4">Notifications</h3>
+        <ul class="space-y-2">
+          {% for n in notifications %}
+          <li class="bg-white p-4 rounded shadow">
+            <p>{{ n.message }}</p>
+            <small class="text-gray-500">User ID: {{ n.user_id }}</small>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Tab switching
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+
+    // Inventory update
+    document.getElementById('inventoryForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch('/update_inventory', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        location.reload();
+      })
+      .catch(err => console.error(err));
+    });
+
+    // Delete user
+    function deleteUser(id) {
+      if (!confirm('Delete user?')) return;
+      fetch(`/delete_user/${id}`, {
+        method: "POST"
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        location.reload();
+      })
+      .catch(err => console.error(err));
+    }
+  </script>
+</body>
+
+</html>

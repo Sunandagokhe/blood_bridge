@@ -1,0 +1,190 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "user",
+            "email": "user@bloodbridge.com",
+            "phone": "user@bloodbridge.com",
+            "dob": "2026-01-06",
+            "gender": "Female",
+            "blood_group": "AB+",
+            "address": "multai",
+            "password": "scrypt:32768:8:1$0n9T9dKVCBG2QqC0$d57bf798fa5a2113acc37ba9668c023d73722eb81f57beecdc7aa11c0298a21e357def4339857968737e88ffd2d689b82210058b2cfc7c1220ac0e169758d091",
+            "role": "user"
+        },
+        {
+            "id": 2,
+            "name": "donar",
+            "email": "donar@bloodbridge.com",
+            "phone": "1234567890",
+            "dob": "2025-10-08",
+            "gender": "Female",
+            "blood_group": "A+",
+            "address": "mulati",
+            "password": "scrypt:32768:8:1$MVMGLO8oLxgLdh3t$a61447d7b8de65c5c7f42a8cc3817b21ad57d31b3bf02d114bf05176b6cee42e6ce7c51093b5bc4595323db6ee5ef8efe98c39c6870a8a460706a479917da66d",
+            "role": "user"
+        },
+        {
+            "id": 3,
+            "name": "user1",
+            "email": "user1@bloodbridge.com",
+            "phone": "user1@bloodbridge.com",
+            "dob": "2026-01-08",
+            "gender": "Male",
+            "blood_group": "AB+",
+            "address": "multai",
+            "password": "scrypt:32768:8:1$MNrWdcvr67HisAUP$30e70c96a6540d593611a1f7a7d822fe73af1551930f2f44d02ba88185c23eae594d6d19a2224abf26d4d70eb614e77eb0c361728dbd556e1b870e7d18cc5514",
+            "role": "user"
+        }
+    ],
+    "blood_requests": [
+        {
+            "id": 1,
+            "blood_group": "A+",
+            "units": "9",
+            "priority": "Normal",
+            "location": "nagpur",
+            "requested_by": "user@bloodbridge.com",
+            "status": "Approved"
+        },
+        {
+            "id": 2,
+            "blood_group": "A+",
+            "units": "1",
+            "priority": "Normal",
+            "location": "multai",
+            "requested_by": "user@bloodbridge.com",
+            "status": "Pending"
+        },
+        {
+            "id": 3,
+            "blood_group": "A+",
+            "units": "1",
+            "priority": "Normal",
+            "location": "multai",
+            "requested_by": "user@bloodbridge.com",
+            "status": "Pending"
+        },
+        {
+            "id": 4,
+            "blood_group": "A+",
+            "units": "1",
+            "priority": "Normal",
+            "location": "multai",
+            "requested_by": "user@bloodbridge.com",
+            "status": "Pending"
+        },
+        {
+            "id": 5,
+            "blood_group": "A+",
+            "units": "1",
+            "priority": "Normal",
+            "location": "multai",
+            "requested_by": "donar@bloodbridge.com",
+            "status": "Approved"
+        },
+        {
+            "id": 6,
+            "blood_group": "A+",
+            "units": "1",
+            "priority": "Normal",
+            "location": "multai",
+            "requested_by": "donar@bloodbridge.com",
+            "status": "Pending"
+        },
+        {
+            "id": 7,
+            "blood_group": "AB+",
+            "units": "1",
+            "priority": "Normal",
+            "location": "multai",
+            "requested_by": "user1@bloodbridge.com",
+            "status": "Approved"
+        },
+        {
+            "id": 18,
+            "blood_group": "AB-",
+            "units": "1",
+            "priority": "Emergency",
+            "location": "multai",
+            "requested_by": "user@bloodbridge.com",
+            "status": "Pending"
+        }
+    ],
+    "donation_history": [
+        {
+            "user_id": 1,
+            "date": "2024-01-01"
+        },
+        {
+            "user_id": 1,
+            "blood_group": "A+",
+            "location": "nagpur",
+            "date": "2026-01-30",
+            "status": "Completed"
+        },
+        {
+            "user_id": 2,
+            "blood_group": "A+",
+            "location": "multai",
+            "date": "2026-01-31",
+            "status": "Completed"
+        }
+    ],
+    "inventory": [
+        {
+            "blood_group": "A+",
+            "units": 10,
+            "location": "City Hospital"
+        },
+        {
+            "blood_group": "B+",
+            "units": 5,
+            "location": "City Hospital"
+        },
+        {
+            "blood_group": "O+",
+            "units": 8,
+            "location": "District Hospital"
+        },
+        {
+            "blood_group": "A+",
+            "units": 1,
+            "location": "nagpur"
+        },
+        {
+            "blood_group": "A+",
+            "units": 1,
+            "location": "multai"
+        },
+        {
+            "blood_group": "AB+",
+            "units": 9,
+            "location": "nagpur"
+        }
+    ],
+    "notifications": [
+        {
+            "message": "Inventory request: 3 units of AB+ at multai",
+            "type": "inventory_request"
+        },
+        {
+            "message": "Inventory request: 12 units of AB+ at multai",
+            "type": "inventory_request"
+        },
+        {
+            "message": "Inventory request: 14 units of AB+ at nagpur",
+            "type": "inventory_request"
+        },
+        {
+            "id": 4,
+            "type": "inventory_request",
+            "blood_group": "AB+",
+            "units": 9,
+            "location": "nagpur",
+            "requested_by": "user@bloodbridge.com",
+            "status": "Approved"
+        }
+    ],
+    "appointments": []
+}

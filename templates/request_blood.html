@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Request Blood</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-50 flex justify-center items-center min-h-screen">
+
+<div class="bg-white p-8 rounded shadow w-96">
+  <h2 class="text-xl font-bold text-red-600 mb-4">Emergency Blood Request</h2>
+
+  <!-- SHOW SUCCESS MESSAGE -->
+  {% if request_data %}
+    <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+      <p><b>Blood Group:</b> {{ request_data.blood_group }}</p>
+      <p><b>Units:</b> {{ request_data.units }}</p>
+      <p><b>Priority:</b> {{ request_data.priority }}</p>
+    </div>
+  {% endif %}
+
+  <!-- FORM STARTS HERE -->
+  <form method="post" action="{{ url_for('request_blood') }}">
+  <section class="bg-white p-6 rounded shadow mb-6">
+  <h3 class="text-xl font-bold mb-3">Request Blood</h3>
+
+  <form method="post" action="{{ url_for('request_blood') }}">
+    <select name="blood_group" class="border p-2 w-full mb-2" required>
+      <option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option>
+    </select>
+
+    <input type="number" name="units" placeholder="Units" class="border p-2 w-full mb-2" required>
+
+    <select name="priority" class="border p-2 w-full mb-2">
+      <option>Normal</option>
+      <option>Emergency</option>
+    </select>
+
+    <input type="text" name="location" placeholder="Hospital Location" class="border p-2 w-full mb-2" required>
+
+    <button class="bg-red-600 text-white px-4 py-2 rounded">
+      Submit Request
+    </button>
+  </form>
+</section>
+
+</body>
+</html>

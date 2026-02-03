@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Donate Blood</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-red-50 min-h-screen flex items-center justify-center">
+
+<div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+
+  <h2 class="text-2xl font-bold text-center text-red-600 mb-6">
+    ❤️ Donate Blood
+  </h2>
+
+  <form method="post">
+
+    <label class="block mb-2 font-semibold">Blood Group</label>
+    <select name="blood_group" required class="w-full p-2 border rounded mb-4">
+      <option>A+</option>
+      <option>B+</option>
+      <option>O+</option>
+      <option>AB+</option>
+      <option>A-</option>
+      <option>B-</option>
+      <option>O-</option>
+      <option>AB-</option>
+    </select>
+
+    <label class="block mb-2 font-semibold">Donation Location</label>
+    <input type="text" name="location" placeholder="Hospital / Blood Bank"
+           class="w-full p-2 border rounded mb-4" required>
+
+     <form method="POST">
+    <input type="hidden" name="blood_group" value="">
+    <input type="hidden" name="location" value="">
+
+    <button class="bg-red-600 text-white px-4 py-2 rounded">
+      Confirm Donate
+    </button>
+  </form>
+
+</div>
+
+</body>
+</html>

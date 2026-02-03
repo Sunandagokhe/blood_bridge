@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Blood Inventory - BloodBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<!-- Navbar -->
+<nav class="bg-red-600 text-white p-4 flex justify-between items-center shadow">
+  <h2 class="font-bold text-xl">🩸 BloodBridge Inventory</h2>
+  <a href="{{ url_for('dashboard') }}" class="hover:underline">← Back to Dashboard</a>
+</nav>
+
+<div class="p-6 max-w-6xl mx-auto">
+
+  <!-- Inventory Table -->
+  <h3 class="text-2xl font-bold mb-4">Available Blood Inventory</h3>
+
+  <div class="overflow-x-auto bg-white rounded shadow mb-8">
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-red-600 text-white">
+        <tr>
+          <th class="p-3">Blood Group</th>
+          <th class="p-3">Units Available</th>
+          <th class="p-3">Location</th>
+          <th class="p-3">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in inventory %}
+        <tr class="border-b">
+          <td class="p-3 font-semibold">{{ item.blood_group }}</td>
+          <td class="p-3">{{ item.units }}</td>
+          <td class="p-3">{{ item.location }}</td>
+          <td class="p-3">
+            {% if item.units > 0 %}
+              <span class="text-green-600 font-semibold">Available</span>
+            {% else %}
+              <span class="text-red-600 font-semibold">Out of Stock</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4" class="p-4 text-center text-gray-500">
+            No inventory data available
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Inventory Request Form -->
+  <h3 class="text-2xl font-bold mb-4">Request Blood Inventory</h3>
+
+  <form method="POST" action="{{ url_for('inventory') }}"
+        class="bg-white p-6 rounded shadow max-w-xl">
+
+    <div class="mb-4">
+      <label class="block font-semibold mb-1">Blood Group</label>
+      <select name="blood_group" class="w-full border p-2 rounded" required>
+        <option value="">Select</option>
+        <option>A+</option><option>A-</option>
+        <option>B+</option><option>B-</option>
+        <option>O+</option><option>O-</option>
+        <option>AB+</option><option>AB-</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label class="block font-semibold mb-1">Units Required</label>
+      <input type="number" name="units" min="1"
+             class="w-full border p-2 rounded" required>
+    </div>
+
+    <div class="mb-4">
+      <label class="block font-semibold mb-1">Hospital / Location</label>
+      <input type="text" name="location"
+             class="w-full border p-2 rounded" required>
+    </div>
+
+    <button type="submit"
+      class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
+      Submit Inventory Request
+    </button>
+  </form>
+
+</div>
+
+</body>
+</html>

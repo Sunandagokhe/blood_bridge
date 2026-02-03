@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BloodBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for better visuals */
+    .hero-bg {
+      background: linear-gradient(to right, #dc2626, #ef4444), url('https://via.placeholder.com/1920x600?text=Blood+Donation+Hero');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="bg-red-50 min-h-screen">
+
+  <nav class="bg-red-600 text-white p-4 flex justify-between items-center shadow-lg">
+    <h1 class="text-xl font-bold">🩸 BloodBridge</h1>
+    <div class="space-x-4">
+      <a href="{{ url_for('index') }}" class="hover:underline transition">Home</a>
+      <a href="{{ url_for('about') }}" class="hover:underline transition">About Us</a>
+      <a href="{{ url_for('login') }}" class="hover:underline transition">Login</a>
+      <a href="{{ url_for('signup') }}" class="hover:underline transition">Register</a>
+      <a href="{{ url_for('admin_login') }}" class="hover:underline transition">Admin Login</a>
+    </div>
+  </nav>
+
+  <section class="hero-bg text-center py-20 px-4">
+    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+      Connecting Donors & Saving Lives
+    </h2>
+    <p class="text-white max-w-2xl mx-auto mb-6 drop-shadow">
+      BloodBridge is a cloud-based blood bank management system that helps hospitals,
+      donors, and blood banks respond quickly to emergency blood needs. Join us today!
+    </p>
+    <a href="{{ url_for('request_blood') }}" class="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">Get Started</a>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h3 class="text-3xl font-bold text-red-700 mb-6">Why Donate Blood?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h4 class="text-red-600 font-bold text-lg">Save Lives</h4>
+          <p class="text-gray-600">One donation can help up to three people in need.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h4 class="text-red-600 font-bold text-lg">Health Benefits</h4>
+          <p class="text-gray-600">Regular donation improves heart health and reduces iron levels.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h4 class="text-red-600 font-bold text-lg">Community Impact</h4>
+          <p class="text-gray-600">Be part of a network that supports hospitals and emergencies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  </section>
+  <!-- Blood Compatibility Table -->
+<section class="py-16 px-4 bg-white">
+  <div class="max-w-5xl mx-auto">
+    <h3 class="text-3xl font-bold text-red-700 mb-6 text-center">
+      Blood Donation Compatibility
+    </h3>
+
+    <p class="text-center text-gray-600 mb-8">
+      This table shows which blood groups can donate to and receive from others.
+    </p>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full border border-gray-300 text-center">
+        <thead class="bg-red-600 text-white">
+          <tr>
+            <th class="border p-3">Blood Group</th>
+            <th class="border p-3">Can Donate To</th>
+            <th class="border p-3">Can Receive From</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-gray-50">
+            <td class="border p-3 font-semibold">O−</td>
+            <td class="border p-3">All Blood Groups</td>
+            <td class="border p-3">O−</td>
+          </tr>
+          <tr>
+            <td class="border p-3 font-semibold">O+</td>
+            <td class="border p-3">O+, A+, B+, AB+</td>
+            <td class="border p-3">O−, O+</td>
+          </tr>
+          <tr class="bg-gray-50">
+            <td class="border p-3 font-semibold">A−</td>
+            <td class="border p-3">A−, A+, AB−, AB+</td>
+            <td class="border p-3">O−, A−</td>
+          </tr>
+          <tr>
+            <td class="border p-3 font-semibold">A+</td>
+            <td class="border p-3">A+, AB+</td>
+            <td class="border p-3">O−, O+, A−, A+</td>
+          </tr>
+          <tr class="bg-gray-50">
+            <td class="border p-3 font-semibold">B−</td>
+            <td class="border p-3">B−, B+, AB−, AB+</td>
+            <td class="border p-3">O−, B−</td>
+          </tr>
+          <tr>
+            <td class="border p-3 font-semibold">B+</td>
+            <td class="border p-3">B+, AB+</td>
+            <td class="border p-3">O−, O+, B−, B+</td>
+          </tr>
+          <tr class="bg-gray-50">
+            <td class="border p-3 font-semibold">AB−</td>
+            <td class="border p-3">AB−, AB+</td>
+            <td class="border p-3">O−, A−, B−, AB−</td>
+          </tr>
+          <tr>
+            <td class="border p-3 font-semibold">AB+</td>
+            <td class="border p-3">AB+</td>
+            <td class="border p-3">All Blood Groups</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+  <footer class="bg-red-600 text-white text-center py-4">
+    <p>&copy; 2026 BloodBridge. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('donorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for registering! We will contact you soon.');
+      // In a real app, send data to backend (e.g., via fetch to Flask route)
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup | BloodBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-red-50 min-h-screen flex justify-center items-center">
+
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg">
+    
+    <h2 class="text-2xl font-bold text-center text-red-600 mb-6">
+      🩸 BloodBridge – New User Registration
+    </h2>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="mb-4 p-3 rounded text-white
+               {% if category == 'success' %} bg-green-500
+               {% elif category == 'danger' %} bg-red-500
+               {% else %} bg-blue-500 {% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{{ url_for('signup') }}" class="space-y-4">
+
+      <!-- Full Name -->
+      <input type="text" name="name" placeholder="Full Name"
+        class="w-full p-2 border rounded" required>
+
+      <!-- Email -->
+      <input type="email" name="email" placeholder="Email Address"
+        class="w-full p-2 border rounded" required>
+
+      <!-- Phone -->
+      <input type="tel" name="phone" placeholder="Mobile Number"
+        class="w-full p-2 border rounded" required>
+
+      <!-- Date of Birth -->
+      <div>
+        <label class="text-sm text-gray-600">Date of Birth</label>
+        <input type="date" name="dob"
+          class="w-full p-2 border rounded" required>
+      </div>
+
+      <!-- Gender -->
+      <div>
+        <label class="text-sm text-gray-600">Gender</label>
+        <select name="gender" class="w-full p-2 border rounded" required>
+          <option value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Blood Group -->
+      <div>
+        <label class="text-sm text-gray-600">Blood Group</label>
+        <select name="blood_group" class="w-full p-2 border rounded" required>
+          <option value="">Select Blood Group</option>
+          <option>A+</option><option>A-</option>
+          <option>B+</option><option>B-</option>
+          <option>O+</option><option>O-</option>
+          <option>AB+</option><option>AB-</option>
+        </select>
+      </div>
+
+      <!-- Address -->
+      <textarea name="address" rows="2" placeholder="Address"
+        class="w-full p-2 border rounded" required></textarea>
+
+      <!-- Password -->
+      <input type="password" name="password" placeholder="Password"
+        class="w-full p-2 border rounded" required>
+
+      <!-- Confirm Password -->
+      <input type="password" name="confirm_password" placeholder="Confirm Password"
+        class="w-full p-2 border rounded" required>
+
+      <!-- Submit Button -->
+      <button type="submit"
+        class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition">
+        Register
+      </button>
+
+    </form>
+
+    <p class="text-center text-sm mt-4">
+      Already have an account?
+      <a href="{{ url_for('login') }}" class="text-red-600 font-semibold">
+        Login
+      </a>
+    </p>
+
+  </div>
+
+</body>
+</html>

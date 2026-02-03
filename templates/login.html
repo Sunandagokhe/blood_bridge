@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login | BloodBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-red-50 min-h-screen flex flex-col">
+
+<!-- NAVBAR -->
+<nav class="bg-red-600 text-white px-6 py-4 flex justify-between items-center">
+  <h1 class="text-xl font-bold">🩸 BloodBridge</h1>
+  <div class="space-x-4">
+    <a href="/" class="hover:underline">Home</a>
+    <a href="/about" class="hover:underline">About Us</a>
+    <a href="/signup" class="hover:underline">Register</a>
+  </div>
+</nav>
+
+<!-- CENTER LOGIN CARD -->
+<div class="flex flex-1 items-center justify-center">
+
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+
+    <h2 class="text-2xl font-bold text-center text-red-600 mb-6">
+      Login
+    </h2>
+
+    <form method="post" action="{{ url_for('login') }}">
+
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        required
+        class="w-full p-3 mb-4 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-400"
+      >
+
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        required
+        class="w-full p-3 mb-6 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-400"
+      >
+
+      <button
+        type="submit"
+        class="w-full bg-red-600 text-white py-3 rounded font-semibold hover:bg-red-700 transition"
+      >
+        Login
+      </button>
+
+    </form>
+
+    <p class="text-center mt-4 text-sm">
+      Don’t have an account?
+      <a href="{{ url_for('signup') }}" class="text-red-600 font-semibold hover:underline">
+        Register
+      </a>
+    </p>
+
+  </div>
+
+</div>
+
+</body>
+</html>

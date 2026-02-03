@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>About Us - BloodBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hero-bg {
+      background: linear-gradient(to right, #dc2626, #ef4444), url('https://via.placeholder.com/1920x600?text=About+BloodBridge');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="bg-red-50 min-h-screen">
+
+  <nav class="bg-red-600 text-white p-4 flex justify-between items-center shadow-lg">
+    <h1 class="text-xl font-bold">🩸 BloodBridge</h1>
+    <div class="space-x-4">
+      <a href="{{ url_for('index') }}" class="hover:underline transition">Home</a>
+      <a href="{{ url_for('login') }}" class="hover:underline transition">User Login</a>
+      <a href="{{ url_for('signup') }}" class="hover:underline transition">Register</a>
+    </div>
+  </nav>
+
+  <section class="hero-bg text-center py-20 px-4">
+    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+      About BloodBridge
+    </h2>
+    <p class="text-white max-w-2xl mx-auto mb-6 drop-shadow">
+      Learn more about our mission to connect donors, hospitals, and blood banks for a healthier world.
+    </p>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-bold text-red-700 mb-6 text-center">Our Mission</h3>
+      <p class="text-gray-700 mb-6">
+        BloodBridge is a revolutionary cloud-based platform designed to streamline blood bank management. We bridge the gap between donors, hospitals, and blood banks, ensuring timely access to life-saving blood during emergencies. Founded in 2023, our goal is to save lives by making blood donation efficient, safe, and accessible.
+      </p>
+
+      <h4 class="text-2xl font-bold text-red-600 mb-4">What We Do</h4>
+      <ul class="list-disc list-inside text-gray-700 mb-6">
+        <li>Connect donors with hospitals in need of specific blood types.</li>
+        <li>Provide real-time inventory tracking for blood banks.</li>
+        <li>Facilitate emergency blood requests with priority handling.</li>
+        <li>Educate and encourage regular blood donations through our platform.</li>
+        <li>Offer secure dashboards for users and admins to manage profiles and data.</li>
+      </ul>
+
+      <h4 class="text-2xl font-bold text-red-600 mb-4">Our Team</h4>
+      <p class="text-gray-700 mb-6">
+        Our team consists of healthcare professionals, software engineers, and volunteers passionate about making a difference. We collaborate with hospitals and organizations worldwide to ensure our system meets the highest standards of safety and reliability.
+      </p>
+
+      <h4 class="text-2xl font-bold text-red-600 mb-4">Why Choose BloodBridge?</h4>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h5 class="text-red-600 font-bold text-lg">Reliability</h5>
+          <p class="text-gray-600">Our platform is built with robust technology to handle high-volume requests without fail.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h5 class="text-red-600 font-bold text-lg">Security</h5>
+          <p class="text-gray-600">All data is encrypted and protected to ensure donor privacy and compliance with regulations.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h5 class="text-red-600 font-bold text-lg">Community</h5>
+          <p class="text-gray-600">Join a global network of heroes who donate and save lives every day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray-100 py-16 px-4 text-center">
+    <h3 class="text-3xl font-bold text-red-700 mb-4">Get Involved</h3>
+    <p class="text-gray-700 mb-6">Ready to make a difference? Sign up today or contact us for partnerships.</p>
+    <a href="{{ url_for('signup') }}" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition">Join Now</a>
+  </section>
+
+  <footer class="bg-red-600 text-white text-center py-4">
+    <p>&copy; 2023 BloodBridge. All rights reserved.</p>
+  </footer>
+</body>
+</html>
