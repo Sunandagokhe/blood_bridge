@@ -1,2 +1,5 @@
-Flask
 
+Flask==3.0.0
+boto3==1.34.34
+botocore==1.34.34
+Werkzeug==3.0.1
