@@ -12,8 +12,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "default_secret_key")
 
 # AWS Clients
 dynamodb = boto3.resource('dynamodb', region_name=os.environ.get("DYNAMODB_REGION", "us-east-1"))
-sns_client = boto3.client('sns', region_name=os.environ.get("SNS_REGION", "us-east-1"))
-sns_topic_arn = os.environ.get("SNS_TOPIC_ARN")
+
 
 # DynamoDB Tables
 users_table = dynamodb.Table('users')
