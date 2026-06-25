@@ -7,6 +7,8 @@ import os
 app = Flask(__name__)
 app.secret_key = "secret_key_here"
 
+load_data()
+
 # -------------------------
 # Admin Credentials (temporary)
 # -------------------------
@@ -463,6 +465,5 @@ def request_blood_page():
 # -------------------------
 # Run App
 # -------------------------
-if __name__ == '__main__':
-    load_data()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
