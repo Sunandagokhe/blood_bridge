@@ -1,2 +1,5 @@
-Flask
 
+Flask
+boto3
+botocore
+Werkzeug

@@ -22,7 +22,7 @@ Clone the repository:
 
 
 Copy code
-git clone https://github.com/your-repo/bloodbridge-aws.git
+git clone https://github.com/Sunandagokhe/blood_bridge
 cd bloodbridge-aws
 Create a virtual environment:
 
