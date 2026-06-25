@@ -7,8 +7,6 @@ import os
 app = Flask(__name__)
 app.secret_key = "secret_key_here"
 
-load_data()
-
 # -------------------------
 # Admin Credentials (temporary)
 # -------------------------
@@ -61,7 +59,7 @@ def load_data():
         ]
         notifications = []
         appointments = []
-
+load_data()
 # -------------------------
 # Blood Compatibility
 # -------------------------
